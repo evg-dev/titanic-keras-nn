@@ -177,7 +177,7 @@ selector.fit(pre_train[predictors], pre_train["Survived"])
 
 scores = -np.log10(selector.pvalues_)
 
-#Show predictors
+# Show predictors
 plt.bar(range(len(predictors)), scores)
 plt.xticks(range(len(predictors)), predictors, rotation='vertical')
 plt.show()
@@ -189,10 +189,9 @@ Y = Y[:, 1]
 kfold = StratifiedKFold(n_splits=5,  shuffle=True, random_state=seed).split(X, Y)
 cv = []
 i = len(predictors)
-
+index = test["PassengerId"].as_matrix()
 
 def load_model_and_fit(train_x, train_y):
-
     model = Sequential()
     model.add(Dense(32, input_dim=i, activation='sigmoid'))
     model.add(Dropout(0.5))
@@ -216,7 +215,7 @@ print("%.2f%% (+/- %.2f%%)" % (np.mean(cv), np.std(cv)))
 
 model = load_model_and_fit(X, Y)
 out = model.predict_classes(pre_test[predictors].as_matrix()).ravel()
-index = test["PassengerId"].as_matrix()
+
 
 submission = pd.DataFrame({
         "PassengerId": index,
