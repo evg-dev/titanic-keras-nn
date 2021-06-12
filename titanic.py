@@ -202,6 +202,11 @@ def load_model_and_fit(train_x, train_y):
     model.add(Dense(1, activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
     model.fit(train_x, train_y, nb_epoch=600, batch_size=32, verbose=0)
+    model_json = model.to_json()
+    with open("model.json", "w") as json_file:
+        json_file.write(model_json)
+
+    model.save_weights("model.h5")
     return model
 
 # For testing
